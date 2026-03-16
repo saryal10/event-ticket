@@ -2,100 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MDM Mugling New Year 2083 Luxury Pass</title>
+    <title>MDM Mugling New Year 2083 - Dark Luxury Edition</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Roboto+Condensed:wght@700&family=Oswald:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;700&display=swap');
 
-        body { background: #cbd5e1; display: flex; flex-direction: column; align-items: center; padding: 40px; font-family: 'Roboto Condensed', sans-serif; }
+        :root {
+            --midnight: #0f172a;
+            --deep-charcoal: #1e293b;
+            --gold: #d4af37;
+            --soft-gold: #f5e6ab;
+            --white: #ffffff;
+        }
+
+        body { background: #020617; display: flex; flex-direction: column; align-items: center; padding: 40px; font-family: 'Montserrat', sans-serif; color: var(--white); }
         
         .boarding-pass { 
-            background: #fff; 
+            background: var(--midnight); 
             width: 1350px; 
-            height: 400px; 
+            height: 420px; 
             display: flex; 
-            border-radius: 24px; 
+            border-radius: 12px; 
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            border: 2px solid #1c3665;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--gold);
             position: relative;
         }
 
-        .notch { position: absolute; width: 26px; height: 26px; background: #cbd5e1; border-radius: 50%; z-index: 5; border: 1.5px solid #94a3b8; }
+        /* Perforation Notches */
+        .notch { position: absolute; width: 26px; height: 26px; background: #020617; border-radius: 50%; z-index: 5; border: 1px solid var(--gold); }
         .n-top { top: -14px; } .n-bottom { bottom: -14px; }
         .p1 { left: 430px; } .p2 { left: 615px; } .p3 { left: 800px; } .p4 { left: 985px; } .p5 { left: 1170px; }
 
-        .section { border-right: 2px dashed #cbd5e1; display: flex; flex-direction: column; position: relative; }
+        .section { border-right: 1px dashed rgba(212, 175, 55, 0.3); display: flex; flex-direction: column; position: relative; }
         .section:last-child { border-right: none; }
 
         /* Main Ticket Body */
-        .main { width: 430px; padding: 25px; background: #fff; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .main-logo { height: 60px; width: 60px; object-fit: contain; }
+        .main { width: 430px; padding: 30px; background: var(--midnight); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .main-logo { height: 60px; width: 60px; object-fit: contain; filter: brightness(1.1); }
         
         .event-info { text-align: center; flex-grow: 1; padding: 0 10px; }
-        .event-title { color: #1c3665; font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 700; line-height: 1.1; text-transform: uppercase; letter-spacing: -0.5px; }
-        .tagline { font-size: 11px; color: #b42828; font-weight: bold; text-transform: uppercase; display: block; margin-top: 4px; border-top: 1px solid #eee; padding-top: 4px; }
-        .credits { font-size: 9px; color: #64748b; margin-top: 5px; font-weight: bold; }
+        .event-title { color: var(--white); font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.2; letter-spacing: 0.5px; }
+        .tagline { font-size: 11px; color: var(--gold); font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; display: block; margin-top: 5px; letter-spacing: 1px; }
+        .credits { font-size: 8px; color: var(--soft-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; opacity: 0.8; }
 
-        .passenger-name { font-size: 28px; font-weight: 700; text-transform: uppercase; border-bottom: 5px solid #1c3665; margin: 15px 0 10px 0; padding-bottom: 5px; color: #0f172a; letter-spacing: 1px; }
+        .passenger-name { font-size: 26px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--gold); margin: 20px 0 15px 0; padding-bottom: 5px; color: var(--white); letter-spacing: 3px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px; }
-        .label { color: #64748b; font-weight: bold; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .data { font-weight: 700; color: #1e293b; font-size: 14px; margin-bottom: 2px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 11px; }
+        .label { color: var(--gold); font-weight: 700; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; }
+        .data { font-weight: 400; color: var(--white); font-size: 13px; margin-top: 2px; }
 
+        /* DARKER HIGHLIGHTS BOX */
         .itinerary-large { 
-            font-size: 13px; 
-            color: #1c3665; 
-            margin-top: 15px; 
-            line-height: 1.4; 
-            border: 2px solid #f1f5f9; 
-            background: #f8fafc;
-            padding: 10px; 
-            border-radius: 10px;
+            font-size: 11px; 
+            color: var(--gold); 
+            margin-top: 20px; 
+            line-height: 1.5; 
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px; 
+            border-radius: 4px;
             text-align: center;
             font-weight: 700;
+            letter-spacing: 1.2px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         .drink-punch {
-            position: absolute; bottom: 85px; right: 25px;
+            position: absolute; bottom: 95px; right: 25px;
             width: 55px; height: 55px;
-            border: 3px dashed #b42828; border-radius: 50%;
+            border: 1px solid var(--gold); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            text-align: center; font-size: 10px; font-weight: 900; color: #b42828;
-            transform: rotate(12deg);
-            background: #fff;
+            text-align: center; font-size: 9px; font-weight: 700; color: var(--gold);
+            transform: rotate(10deg);
+            background: rgba(0,0,0,0.3);
         }
 
         /* Stubs Styling */
-        .stub { width: 185px; text-align: center; background: #fff; padding: 0; }
-        .stub-header { display: flex; justify-content: space-between; padding: 8px 12px; background: #1c3665; margin-bottom: 15px; }
+        .stub { width: 185px; text-align: center; background: var(--deep-charcoal); padding: 0; }
+        .stub-header { display: flex; justify-content: space-between; padding: 10px 15px; background: var(--midnight); border-bottom: 1px solid var(--gold); margin-bottom: 20px; }
         
-        /* New Logo Container for Stubs */
         .stub-logo-container { 
-            height: 28px; 
-            width: 28px; 
-            background: white; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden;
-            padding: 2px;
+            height: 24px; width: 24px; background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 2px;
         }
         .stub-logo { height: 100%; width: 100%; object-fit: contain; }
         
-        .stub-content { padding: 0 12px; display: flex; flex-direction: column; height: 100%; position: relative; }
-        .stub-title { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 18px; color: #1c3665; text-transform: uppercase; line-height: 1.2; margin-bottom: 8px; }
-        .stub-sub { font-size: 10px; color: #b42828; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .stub-icon { font-size: 34px; margin-bottom: 10px; }
-        .stub-name { font-size: 11px; font-weight: 700; border-top: 1px solid #f1f5f9; padding-top: 8px; color: #334155; }
+        .stub-content { padding: 0 15px; display: flex; flex-direction: column; height: 100%; position: relative; }
+        .stub-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: var(--white); text-transform: uppercase; line-height: 1.2; margin-bottom: 10px; }
+        .stub-sub { font-size: 9px; color: var(--gold); font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .stub-icon { font-size: 30px; margin-bottom: 12px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.4)); }
+        .stub-name { font-size: 10px; font-weight: 700; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 10px; color: var(--soft-gold); letter-spacing: 1px; }
         
-        .barcode-1d { font-family: 'Libre Barcode 39'; font-size: 42px; line-height: 1; color: #1e293b; margin-top: auto; padding-bottom: 15px; }
-        .qr-code { position: absolute; left: 25px; bottom: 20px; width: 70px; height: 70px; border: 1px solid #f1f5f9; padding: 3px; background: #fff; }
+        .barcode-1d { font-family: 'Libre Barcode 39'; font-size: 42px; line-height: 1; color: var(--gold); margin-top: auto; padding-bottom: 20px; opacity: 0.8; }
+        .qr-code { position: absolute; left: 25px; bottom: 25px; width: 65px; height: 65px; border: 1px solid var(--gold); padding: 2px; background: white; }
 
-        .bg-day1 { background-color: #f8fafc; } 
-        .bg-day2 { background-color: #f0f9ff; } 
-        .bg-raffle { background-color: #fffbeb; } 
+        /* Subtle Dark Tints */
+        .bg-dark { background-color: #1e293b; }
+        .bg-raffle-dark { background-color: #111827; border-left: 1px solid var(--gold); border-right: 1px solid var(--gold); } 
     </style>
 </head>
 <body>
@@ -108,7 +111,7 @@
                 <div class="event-title">Nepal’s Grandest New Year Party 2083</div>
                 <span class="tagline">Where two rivers meet, Welcome 2083!</span>
                 <div class="credits">
-                    Organized by: Motel Du Mugling | Supported by: Wandering Trails
+                    MDM Mugling & Wandering Trails Adventures Pvt. Ltd
                 </div>
             </div>
             <img src="wt.jpeg" alt="WT" class="main-logo">
@@ -117,14 +120,14 @@
         <div class="passenger-name">ARYAL / SARAD</div>
 
         <div class="grid">
-            <div><div class="label">Route</div><div class="data">KTM ➔ MUGLING</div></div>
-            <div><div class="label">Bus/Seat</div><div class="data">B24 / 12A</div></div>
+            <div><div class="label">Journey</div><div class="data">KTM ➔ MUGLING</div></div>
+            <div><div class="label">Transport</div><div class="data">BUS B24 / SEAT 12A</div></div>
             <div><div class="label">Departure</div><div class="data">13 APR | 09:00 AM</div></div>
-            <div><div class="label">Emergency</div><div class="data">+977 9841729236</div></div>
+            <div><div class="label">Contact</div><div class="data">+977 9841729236</div></div>
         </div>
 
         <div class="itinerary-large">
-            HIGHLIGHTS: Pool Party • Bonfire • River Dip • Rafting • DJ Sets • BBQ
+            POOL PARTY • BONFIRE • RIVER DIP • RAFTING • DJ SETS • BBQ
         </div>
 
         <div class="drink-punch">FREE<br>DRINK<br>★</div>
@@ -132,7 +135,7 @@
         <div class="barcode-1d" style="font-size: 45px; text-align: right; padding-right: 15px;">NY-2083</div>
     </div>
 
-    <div class="section stub bg-day2">
+    <div class="section stub bg-dark">
         <div class="stub-header">
             <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
             <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
@@ -146,7 +149,7 @@
         </div>
     </div>
 
-    <div class="section stub bg-day2">
+    <div class="section stub bg-dark">
         <div class="stub-header">
             <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
             <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
@@ -160,7 +163,7 @@
         </div>
     </div>
 
-    <div class="section stub bg-day1">
+    <div class="section stub bg-dark">
         <div class="stub-header">
             <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
             <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
@@ -174,21 +177,21 @@
         </div>
     </div>
 
-    <div class="section stub bg-raffle">
+    <div class="section stub bg-raffle-dark">
         <div class="stub-header">
             <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
             <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
         </div>
         <div class="stub-content">
-            <div class="stub-sub">Lucky Draw</div>
+            <div class="stub-sub">Exclusive Draw</div>
             <div class="stub-title">RAFFLE<br>TICKET</div>
             <div class="stub-icon">🎟️</div>
-            <div class="stub-name" style="color: #b42828;">SERIAL: #00123</div>
+            <div class="stub-name" style="color: var(--gold); font-weight: 800;">SERIAL: #00123</div>
             <div class="barcode-1d">RAF123</div>
         </div>
     </div>
 
-    <div class="section stub bg-day1">
+    <div class="section stub bg-dark">
         <div class="stub-header">
             <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
             <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
@@ -203,8 +206,8 @@
     </div>
 </div>
 
-<p style="margin-top: 25px; font-weight: bold; color: #1e293b; font-size: 15px; text-transform: uppercase; letter-spacing: 2px;">
-    Motel Du Mugling • Trishuli & Marsyangdi Sangam
+<p style="margin-top: 25px; font-weight: 400; color: var(--gold); font-size: 13px; text-transform: uppercase; letter-spacing: 4px; font-family: 'Playfair Display', serif; font-style: italic; opacity: 0.8;">
+    Motel Du Mugling • The Sangam of Trishuli & Marsyangdi
 </p>
 
 </body>
