@@ -2,142 +2,210 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MDM Event Boarding Pass</title>
+    <title>MDM Mugling New Year 2083 Luxury Pass</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Roboto+Condensed:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Roboto+Condensed:wght@700&family=Oswald:wght@400;600;700&display=swap');
 
-        body { background: #f0f0f0; display: flex; justify-content: center; padding: 50px; font-family: 'Roboto Condensed', sans-serif; }
+        body { background: #cbd5e1; display: flex; flex-direction: column; align-items: center; padding: 40px; font-family: 'Roboto Condensed', sans-serif; }
         
-        /* Compact Strip Size */
         .boarding-pass { 
             background: #fff; 
-            width: 1050px; /* Condensed for printing */
-            height: 300px; 
+            width: 1350px; 
+            height: 400px; 
             display: flex; 
-            border-radius: 12px; 
+            border-radius: 24px; 
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 1px solid #ccc;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border: 2px solid #1c3665;
             position: relative;
         }
 
-        /* Perforation Notches */
-        .notch { position: absolute; width: 20px; height: 20px; background: #f0f0f0; border-radius: 50%; z-index: 5; border: 1px solid #ccc; }
-        .n-top { top: -11px; } .n-bottom { bottom: -11px; }
-        .p1 { left: 400px; } .p2 { left: 530px; } .p3 { left: 660px; } .p4 { left: 790px; } .p5 { left: 920px; }
+        .notch { position: absolute; width: 26px; height: 26px; background: #cbd5e1; border-radius: 50%; z-index: 5; border: 1.5px solid #94a3b8; }
+        .n-top { top: -14px; } .n-bottom { bottom: -14px; }
+        .p1 { left: 430px; } .p2 { left: 615px; } .p3 { left: 800px; } .p4 { left: 985px; } .p5 { left: 1170px; }
 
-        .section { padding: 12px; border-right: 1.5px dashed #ddd; display: flex; flex-direction: column; position: relative; }
+        .section { border-right: 2px dashed #cbd5e1; display: flex; flex-direction: column; position: relative; }
         .section:last-child { border-right: none; }
 
-        /* Main Section */
-        .main { width: 380px; }
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .logo-area { color: #1c3665; font-weight: 700; font-size: 18px; line-height: 1; }
+        /* Main Ticket Body */
+        .main { width: 430px; padding: 25px; background: #fff; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .main-logo { height: 60px; width: 60px; object-fit: contain; }
         
-        /* Star Punch next to logo */
-        .star-punch {
-            width: 45px; height: 45px;
-            background: #fff;
-            border: 2px solid #000;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 8px; font-weight: bold; text-align: center; color: #b42828;
+        .event-info { text-align: center; flex-grow: 1; padding: 0 10px; }
+        .event-title { color: #1c3665; font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 700; line-height: 1.1; text-transform: uppercase; letter-spacing: -0.5px; }
+        .tagline { font-size: 11px; color: #b42828; font-weight: bold; text-transform: uppercase; display: block; margin-top: 4px; border-top: 1px solid #eee; padding-top: 4px; }
+        .credits { font-size: 9px; color: #64748b; margin-top: 5px; font-weight: bold; }
+
+        .passenger-name { font-size: 28px; font-weight: 700; text-transform: uppercase; border-bottom: 5px solid #1c3665; margin: 15px 0 10px 0; padding-bottom: 5px; color: #0f172a; letter-spacing: 1px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px; }
+        .label { color: #64748b; font-weight: bold; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .data { font-weight: 700; color: #1e293b; font-size: 14px; margin-bottom: 2px; }
+
+        .itinerary-large { 
+            font-size: 13px; 
+            color: #1c3665; 
+            margin-top: 15px; 
+            line-height: 1.4; 
+            border: 2px solid #f1f5f9; 
+            background: #f8fafc;
+            padding: 10px; 
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
         }
 
-        .passenger-name { font-size: 22px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid #000; margin-bottom: 10px; }
-        
-        .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5px; font-size: 11px; }
-        .label { color: #b42828; font-weight: bold; font-size: 9px; text-transform: uppercase; }
-        .data { font-weight: 700; color: #000; margin-bottom: 5px; }
+        .drink-punch {
+            position: absolute; bottom: 85px; right: 25px;
+            width: 55px; height: 55px;
+            border: 3px dashed #b42828; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; font-size: 10px; font-weight: 900; color: #b42828;
+            transform: rotate(12deg);
+            background: #fff;
+        }
 
         /* Stubs Styling */
-        .stub { width: 110px; text-align: center; background: #fafafa; }
-        .stub-title { font-weight: 700; font-size: 11px; color: #1c3665; text-transform: uppercase; border-bottom: 1px solid #eee; margin-bottom: 5px; }
-        .stub-name { font-size: 9px; font-weight: 700; margin: 5px 0; border: 1px solid #ccc; padding: 2px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .stub { width: 185px; text-align: center; background: #fff; padding: 0; }
+        .stub-header { display: flex; justify-content: space-between; padding: 8px 12px; background: #1c3665; margin-bottom: 15px; }
         
-        /* Phony Barcodes */
-        .barcode-1d { font-family: 'Libre Barcode 39'; font-size: 40px; line-height: 1; margin-top: auto; }
-        .barcode-2d { position: absolute; right: 10px; bottom: 45px; width: 60px; height: 60px; opacity: 0.8; }
-        .side-barcode { position: absolute; left: -25px; top: 120px; transform: rotate(-90deg); font-family: 'Libre Barcode 39'; font-size: 30px; color: #888; }
+        /* New Logo Container for Stubs */
+        .stub-logo-container { 
+            height: 28px; 
+            width: 28px; 
+            background: white; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
+            padding: 2px;
+        }
+        .stub-logo { height: 100%; width: 100%; object-fit: contain; }
+        
+        .stub-content { padding: 0 12px; display: flex; flex-direction: column; height: 100%; position: relative; }
+        .stub-title { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 18px; color: #1c3665; text-transform: uppercase; line-height: 1.2; margin-bottom: 8px; }
+        .stub-sub { font-size: 10px; color: #b42828; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .stub-icon { font-size: 34px; margin-bottom: 10px; }
+        .stub-name { font-size: 11px; font-weight: 700; border-top: 1px solid #f1f5f9; padding-top: 8px; color: #334155; }
+        
+        .barcode-1d { font-family: 'Libre Barcode 39'; font-size: 42px; line-height: 1; color: #1e293b; margin-top: auto; padding-bottom: 15px; }
+        .qr-code { position: absolute; left: 25px; bottom: 20px; width: 70px; height: 70px; border: 1px solid #f1f5f9; padding: 3px; background: #fff; }
+
+        .bg-day1 { background-color: #f8fafc; } 
+        .bg-day2 { background-color: #f0f9ff; } 
+        .bg-raffle { background-color: #fffbeb; } 
     </style>
 </head>
 <body>
 
 <div class="boarding-pass">
-    <div class="side-barcode">PH0N3Y-CODE</div>
-
-    <div class="notch n-top p1"></div><div class="notch n-bottom p1"></div>
-    <div class="notch n-top p2"></div><div class="notch n-bottom p2"></div>
-    <div class="notch n-top p3"></div><div class="notch n-bottom p3"></div>
-    <div class="notch n-top p4"></div><div class="notch n-bottom p4"></div>
-    <div class="notch n-top p5"></div><div class="notch n-bottom p5"></div>
-
     <div class="section main">
         <div class="header">
-            <div class="logo-area">🚌 MDM EVENTS<br><span style="font-size: 10px; color: #666;">PASSENGER TICKET</span></div>
-            <div class="star-punch">DRINK<br>STAR</div>
+            <img src="mdm.jpeg" alt="MDM" class="main-logo">
+            <div class="event-info">
+                <div class="event-title">Nepal’s Grandest New Year Party 2083</div>
+                <span class="tagline">Where two rivers meet, Welcome 2083!</span>
+                <div class="credits">
+                    Organized by: Motel Du Mugling | Supported by: Wandering Trails
+                </div>
+            </div>
+            <img src="wt.jpeg" alt="WT" class="main-logo">
         </div>
 
         <div class="passenger-name">ARYAL / SARAD</div>
 
         <div class="grid">
-            <div><div class="label">From</div><div class="data">SORHAKHUTTE, KTM</div></div>
-            <div><div class="label">To</div><div class="data">MUGLING, NEPAL (MUG)</div></div>
-            <div><div class="label">Date</div><div class="data">30 CHAITRA 2082</div></div>
+            <div><div class="label">Route</div><div class="data">KTM ➔ MUGLING</div></div>
             <div><div class="label">Bus/Seat</div><div class="data">B24 / 12A</div></div>
-            <div><div class="label">Departure</div><div class="data">08:00 AM</div></div>
-            <div><div class="label">Event Start</div><div class="data">15:00 PM</div></div>
+            <div><div class="label">Departure</div><div class="data">13 APR | 09:00 AM</div></div>
+            <div><div class="label">Emergency</div><div class="data">+977 9841729236</div></div>
         </div>
 
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SaradAryalMDM2083" class="barcode-2d" alt="QR">
-        <div class="barcode-1d">MDM2083SARAD</div>
+        <div class="itinerary-large">
+            HIGHLIGHTS: Pool Party • Bonfire • River Dip • Rafting • DJ Sets • BBQ
+        </div>
+
+        <div class="drink-punch">FREE<br>DRINK<br>★</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=SaradAryal2083" class="qr-code">
+        <div class="barcode-1d" style="font-size: 45px; text-align: right; padding-right: 15px;">NY-2083</div>
     </div>
 
-    <div class="section stub" style="background: #fffcf0;">
-        <div class="stub-title">Raffle</div>
-        <div style="font-size: 20px;">🎟️</div>
-        <div class="stub-name">SARAD ARYAL</div>
-        <div class="label">Ticket No.</div>
-        <div style="font-size: 14px; font-weight: bold;">#00123</div>
-        <div class="barcode-1d" style="font-size: 25px;">00123</div>
+    <div class="section stub bg-day2">
+        <div class="stub-header">
+            <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
+            <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
+        </div>
+        <div class="stub-content">
+            <div class="stub-sub">Day 2 - Farewell</div>
+            <div class="stub-title">FAREWELL<br>LUNCH</div>
+            <div class="stub-icon">🍱</div>
+            <div class="stub-name">SARAD ARYAL</div>
+            <div class="barcode-1d">FAREWELL</div>
+        </div>
     </div>
 
-    <div class="section stub">
-        <div class="stub-title">Lunch #1</div>
-        <div style="font-size: 20px;">🍱</div>
-        <div class="stub-name">SARAD ARYAL</div>
-        <div class="label">Meal Code</div>
-        <div class="data">L1</div>
-        <div class="barcode-1d" style="font-size: 20px;">LUNCH1</div>
+    <div class="section stub bg-day2">
+        <div class="stub-header">
+            <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
+            <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
+        </div>
+        <div class="stub-content">
+            <div class="stub-sub">Day 2 - Morning</div>
+            <div class="stub-title">RIVERSIDE<br>BREAKFAST</div>
+            <div class="stub-icon">☕</div>
+            <div class="stub-name">SARAD ARYAL</div>
+            <div class="barcode-1d">RBREAK</div>
+        </div>
     </div>
 
-    <div class="section stub">
-        <div class="stub-title">Dinner</div>
-        <div style="font-size: 20px;">🍽️</div>
-        <div class="stub-name">SARAD ARYAL</div>
-        <div class="label">Meal Code</div>
-        <div class="data">DNR</div>
-        <div class="barcode-1d" style="font-size: 20px;">DINNER</div>
+    <div class="section stub bg-day1">
+        <div class="stub-header">
+            <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
+            <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
+        </div>
+        <div class="stub-content">
+            <div class="stub-sub">Day 1 - Evening</div>
+            <div class="stub-title">BBQ &<br>DINNER</div>
+            <div class="stub-icon">🍽️</div>
+            <div class="stub-name">SARAD ARYAL</div>
+            <div class="barcode-1d">BBQDNR</div>
+        </div>
     </div>
 
-    <div class="section stub">
-        <div class="stub-title">Breakfast</div>
-        <div style="font-size: 20px;">☕</div>
-        <div class="stub-name">SARAD ARYAL</div>
-        <div class="label">Meal Code</div>
-        <div class="data">BRK</div>
-        <div class="barcode-1d" style="font-size: 20px;">BRKFST</div>
+    <div class="section stub bg-raffle">
+        <div class="stub-header">
+            <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
+            <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
+        </div>
+        <div class="stub-content">
+            <div class="stub-sub">Lucky Draw</div>
+            <div class="stub-title">RAFFLE<br>TICKET</div>
+            <div class="stub-icon">🎟️</div>
+            <div class="stub-name" style="color: #b42828;">SERIAL: #00123</div>
+            <div class="barcode-1d">RAF123</div>
+        </div>
     </div>
 
-    <div class="section stub">
-        <div class="stub-title">Lunch #2</div>
-        <div style="font-size: 20px;">🥘</div>
-        <div class="stub-name">SARAD ARYAL</div>
-        <div class="label">Meal Code</div>
-        <div class="data">L2</div>
-        <div class="barcode-1d" style="font-size: 20px;">LUNCH2</div>
+    <div class="section stub bg-day1">
+        <div class="stub-header">
+            <div class="stub-logo-container"><img src="mdm.jpeg" class="stub-logo"></div>
+            <div class="stub-logo-container"><img src="wt.jpeg" class="stub-logo"></div>
+        </div>
+        <div class="stub-content">
+            <div class="stub-sub">Day 1 - Arrival</div>
+            <div class="stub-title">WELCOME<br>LUNCH</div>
+            <div class="stub-icon">🥘</div>
+            <div class="stub-name">SARAD ARYAL</div>
+            <div class="barcode-1d">WLUNCH</div>
+        </div>
     </div>
 </div>
+
+<p style="margin-top: 25px; font-weight: bold; color: #1e293b; font-size: 15px; text-transform: uppercase; letter-spacing: 2px;">
+    Motel Du Mugling • Trishuli & Marsyangdi Sangam
+</p>
 
 </body>
 </html>
