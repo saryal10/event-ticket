@@ -16,13 +16,11 @@
 
         body { background: #020617; display: flex; flex-direction: column; align-items: center; padding: 40px; font-family: 'Montserrat', sans-serif; color: var(--white); min-height: 100vh; }
         
-        /* FORM UI */
         .no-print-area { background: var(--deep-charcoal); padding: 30px; border-radius: 12px; border: 1px solid var(--gold); width: 600px; margin-bottom: 50px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         .attendee-input { border-bottom: 1px solid #334155; padding: 20px 0; }
         label { display: block; color: var(--gold); font-size: 11px; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
         input, select { width: 100%; padding: 12px; background: #020617; border: 1px solid #334155; color: white; border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; }
         
-        /* TICKETS */
         #ticket-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; }
         .boarding-pass { 
             background: var(--midnight); width: 1400px; height: 480px; display: flex; 
@@ -41,37 +39,18 @@
         .data { font-size: 12px; margin-top: 2px; }
         .itinerary-large { font-size: 10px; color: var(--gold); margin-top: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; text-align: center; border: 1px solid rgba(212,175,55,0.2); }
         
-        /* SPONSORS FIX */
         .powered-by { margin-top: auto; padding-top: 10px; }
-      /* SPONSORS FIX - REMOVE BACKGROUNDS */
-.pb-logos {
-    display: flex;
-    gap: 12px; /* Slightly increased gap for better separation */
-    align-items: center;
-    margin-top: 5px;
-    flex-wrap: wrap; /* Allows logos to wrap if needed on smaller screens */
-}
+        .pb-logos { display: flex; gap: 12px; align-items: center; margin-top: 5px; flex-wrap: wrap; }
+        .pb-logo { height: 35px; width: auto; max-width: 80px; object-fit: contain; background: transparent !important; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5)); }
 
-.pb-logo {
-    height: 35px; /* Fixed height for consistency */
-    width: auto;  /* Width adjusts to maintain aspect ratio */
-    max-width: 80px; /* Optional: prevents very wide logos from taking too much space */
-    object-fit: contain; /* Ensures logo fits within bounds without stretching */
-    background: transparent !important; /* Forces transparent background */
-    padding: 0; /* Removes white padding */
-    border-radius: 0; /* Optional: removes border radius since there's no box */
-    filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5)); /* Optional: adds a slight shadow for depth on dark background */
-} 
         .qr-code { position: absolute; left: 20px; bottom: 85px; width: 65px; height: 65px; border: 1px solid var(--gold); background: white; padding: 2px; }
 
-        /* STUBS */
         .stub { width: 190px; text-align: center; background: var(--deep-charcoal); display: flex; flex-direction: column; }
         .stub-content { padding: 20px 15px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         .barcode-1d { font-family: 'Libre Barcode 39'; font-size: 40px; color: var(--gold); opacity: 0.8; }
         .bg-raffle-dark { background-color: #0d1117 !important; border-left: 1px solid var(--gold); }
 
-        /* BUTTONS AT BOTTOM */
-        .controls-bottom { display: flex; gap: 20px; margin-top: 40px; }
+        .controls-bottom { display: flex; gap: 20px; margin-top: 40px; margin-bottom: 50px; }
         .btn { padding: 15px 40px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
         .btn-gen { background: var(--gold); color: black; width: 100%; }
         .btn-print { background: #22c55e; color: white; }
@@ -80,7 +59,7 @@
         .hidden { display: none !important; }
 
         @media print {
-            .no-print, .controls-bottom { display: none !important; }
+            .no-print, .no-print-area, .controls-bottom { display: none !important; }
             .boarding-pass { page-break-after: always; zoom: 0.55; margin-bottom: 20px; }
         }
     </style>
@@ -88,7 +67,7 @@
 <body>
 
     <div class="no-print-area" id="setup-form">
-        <h2 style="color: var(--gold); margin-top: 0;">Ticket Generator</h2>
+        <h2 style="color: var(--gold); margin-top: 0; font-family: 'Playfair Display', serif;">Ticket Master Gen</h2>
         <label>Attendee Count</label>
         <input type="number" id="attendee-count" value="1" min="1" max="15" onchange="generateForm()">
         <div id="attendee-inputs-container"></div>
@@ -111,9 +90,14 @@
                 container.innerHTML += `
                     <div class="attendee-input">
                         <label>Attendee #${i+1} Name</label>
-                        <input type="text" class="att-name" placeholder="E.g. ARYAL / SARAD" required>
+                        <input type="text" class="att-name" placeholder="John Doe" required>
                         <label>Contact Number</label>
                         <input type="text" class="att-phone" placeholder="98XXXXXXXX">
+                        <label>Ticket Option</label>
+                        <select class="att-option">
+                            <option value="early">Early Departure (Includes Transport + 2 Lunch)</option>
+                            <option value="direct">Venue Direct (No Transport)</option>
+                        </select>
                     </div>`;
             }
         }
@@ -122,13 +106,19 @@
         function renderTickets() {
             const names = document.querySelectorAll('.att-name');
             const phones = document.querySelectorAll('.att-phone');
+            const options = document.querySelectorAll('.att-option');
             const wrapper = document.getElementById('ticket-wrapper');
             wrapper.innerHTML = ''; 
 
             names.forEach((n, i) => {
                 const name = n.value.toUpperCase() || "GUEST";
-                const phone = phones[i].value || "N/A";
-                const raffle = Math.floor(10000 + Math.random() * 90000);
+                const phone = phones[i].value || "98XXXXXXXX";
+                const option = options[i].value;
+                const raffle = Math.floor(1000 + Math.random() * 9000);
+                
+                const route = option === "early" ? "KTM ➔ MUGLING" : "VENUE DIRECT";
+                const seat = option === "early" ? `B1-${10+i}A` : "N/A";
+                const transportLabel = option === "early" ? "Yes (KTM Bus)" : "Self / Direct";
 
                 wrapper.innerHTML += `
                 <div class="boarding-pass">
@@ -143,10 +133,10 @@
                         </div>
                         <div class="passenger-name">${name}</div>
                         <div class="grid">
-                            <div><div class="label">Route</div><div class="data">KTM ➔ MUGLING</div></div>
-                            <div><div class="label">Seat</div><div class="data">B1 / ${10+i}A</div></div>
-                            <div><div class="label">Departure</div><div class="data">13 APR | 09:00 AM</div></div>
-                            <div><div class="label">Contact</div><div class="data">${phone}</div></div>
+                            <div><div class="label">Transport</div><div class="data">${transportLabel}</div></div>
+                            <div><div class="label">Seat</div><div class="data">${seat}</div></div>
+                            <div><div class="label">Phone</div><div class="data">${phone}</div></div>
+                            <div><div class="label">Ref</div><div class="data">MDM-2083-${raffle}</div></div>
                         </div>
                         <div class="itinerary-large">POOL PARTY • BONFIRE • RIVER DIP • RAFTING • DJ SETS</div>
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=MDM${raffle}" class="qr-code">
@@ -164,11 +154,11 @@
                         </div>
                     </div>
 
-                    <div class="section stub"><div class="stub-content"><div class="label">Day 2</div><div class="stub-title">FAREWELL LUNCH</div><div style="font-size:24px">🍱</div><div class="barcode-1d">FAREWELL</div><div class="data">${name}</div></div></div>
-                    <div class="section stub"><div class="stub-content"><div class="label">Day 2</div><div class="stub-title">BREAKFAST</div><div style="font-size:24px">☕</div><div class="barcode-1d">RBREAK</div><div class="data">${name}</div></div></div>
-                    <div class="section stub"><div class="stub-content"><div class="label">Day 1</div><div class="stub-title">BBQ & DINNER</div><div style="font-size:24px">🍽️</div><div class="barcode-1d">BBQDNR</div><div class="data">${name}</div></div></div>
+                    <div class="section stub"><div class="stub-content"><div class="label">Day 1 - Arrival</div><div class="stub-title">WELCOME LUNCH</div><div style="font-size:24px">🥘</div><div class="barcode-1d">WLUNCH</div><div class="data">${name}</div></div></div>
+                    <div class="section stub"><div class="stub-content"><div class="label">Day 1 - Eve</div><div class="stub-title">DINNER</div><div style="font-size:24px">🍽️</div><div class="barcode-1d">BBQDNR</div><div class="data">${name}</div></div></div>
+                    <div class="section stub"><div class="stub-content"><div class="label">Day 2 - AM</div><div class="stub-title">BREAKFAST</div><div style="font-size:24px">☕</div><div class="barcode-1d">BREAKFAST</div><div class="data">${name}</div></div></div>
                     <div class="section stub bg-raffle-dark"><div class="stub-content"><div class="label">Lucky Draw</div><div class="stub-title">RAFFLE</div><div style="font-size:24px">🎟️</div><div style="color:var(--gold)">#0${raffle}</div><div class="barcode-1d">RAF${raffle}</div></div></div>
-                    <div class="section stub"><div class="stub-content"><div class="label">Day 1</div><div class="stub-title">WELCOME LUNCH</div><div style="font-size:24px">🥘</div><div class="barcode-1d">WLUNCH</div><div class="data">${name}</div></div></div>
+                    <div class="section stub"><div class="stub-content"><div class="label">Farewell</div><div class="stub-title">LUNCH</div><div style="font-size:24px">🍱</div><div class="barcode-1d">FAREWELL</div><div class="data">${name}</div></div></div>
                 </div>`;
             });
 
